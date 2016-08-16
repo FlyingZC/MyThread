@@ -1,0 +1,15 @@
+160603
+1.创建线程.线程命名
+2.匿名内部类创建线程
+3.继承Thread.创建线程模拟售票窗口.100张票.3个窗口售票
+4.实现Runnable接口.创建多线程
+	MyRunnable myRunnable=new MyRunnable();
+	//要想启动一个多线程.必须调用start()方法
+	//Thread类的构造方法中.有一个Thread(Runnable target)
+	//new Thread(..)对象的start()方法启动的是myRunnable对象的run()方法.底层源码.Runnable()接口只有run()方法
+	//Thread类implements Runnable
+	new Thread(myRunnable).start();
+	Thread t1=new Thread(myRunnable);
+	t1.start();
+	Thread t2=new Thread(myRunnable);
+	t2.start();
