@@ -9,13 +9,11 @@ public class Test04ThreadLocal {
 		//启动四个线程
 		for(int i=0;i<4;i++){
 			new Thread(new Runnable(){
-
 				@Override
 				public void run() {
-					// TODO Auto-generated method stub
 					int data=new Random().nextInt();
 					System.out.println(Thread.currentThread().getName()+"放入了"+data);
-					//放入数据
+					//放入数据到ThreadLocal中
 					x.set(data);
 					new A().get();
 					new B().get();

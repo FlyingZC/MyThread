@@ -20,10 +20,8 @@ public class CallableDemo {
 				//get()方法获取Future中的结果
 				System.out.println(fs.get());
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (ExecutionException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}finally{
 				exec.shutdown();

@@ -9,14 +9,13 @@ public class Test20Customer {
 				synchronized(Test20Customer.class){
 						try {
 							if(good.getCount()>=30){
-								wait();
+								Test20Customer.class.wait();
 							}else{
 								good.setCount(good.getCount()+1);
 								System.out.println("生产者生产了第"+good.getCount()+"个商品");
-								notify();
+								Test20Customer.class.notify();
 							}
 						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 				}
@@ -29,15 +28,14 @@ public class Test20Customer {
 				synchronized (Test20Customer.class) {
 					try {
 						if (good.getCount() <= 0) {
-							wait();
+							Test20Customer.class.wait();
 						} else {
 							good.setCount(good.getCount() - 1);
 							System.out.println("消费者消费了第" + good.getCount()
 									+ "个商品");
-							notify();
+							Test20Customer.class.notify();
 						}
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}

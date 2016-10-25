@@ -21,7 +21,6 @@ public class Test02Join {
 					//在线程t1中调用t2.join().则t1等待t2结束后才执行
 					t2.join();
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				Thread.currentThread().setName("子线程1");

@@ -23,17 +23,13 @@ public class T0510ThreadCopyFile {
 	
 	public static void main(String[] args) {
 		try {
-			new T0510ThreadCopyFile().copyDirectory(new File("E:\\FileFolder"),new File("d:\\copyf"));
+			new T0510ThreadCopyFile().copyDirectory(new File("E:\\0ShuJuJieGou"),new File("f:\\copyf"));
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	
 	public void copyDirectory(File sourceDir,File targetDir) throws Exception{
-		/*File sourceDir=new File("e:\\FileFolder");
-		File targetDir=new File("d:\\");*/
-		
 		if(!targetDir.exists()){
 			//如果目录不存在.创建多层目录
 			targetDir.mkdirs();
@@ -47,10 +43,10 @@ public class T0510ThreadCopyFile {
 				File targetFile=new File(targetDir.getAbsolutePath()
 						+File.separator+files[i].getName());		
 				//3.启动线程
-				MyThread t=mts[n++%10];
-				t.set(files[i],targetFile);
+				MyThread t=mts[n++%10];//线程数组中的线程在构造方法中已经new过,直接使用
+				t.set(files[i],targetFile);//设置要copy的源文件和目标文件
 				t.start();
-				t.join();
+				t.join();//main线程等待t线程执行完毕
 				mts[n%10]=new MyThread();
 			}
 			if(files[i].isDirectory()){
@@ -81,7 +77,6 @@ class MyThread extends Thread{
 			try {
 				desc.createNewFile();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}	
@@ -100,10 +95,8 @@ class MyThread extends Thread{
 				bos.write(b,0,len);
 			}
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally{
 			
