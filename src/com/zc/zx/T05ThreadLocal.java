@@ -4,7 +4,7 @@ import java.util.Random;
 //ThreadLocal实现(同一个)线程范围内的共享变量.即同一个线程内实现数据共享,其他线程无法访问该数据
 //若共享多个变量,可以将多个变量打包成一个实体,放入一个ThreadLocal对象中
 public class T05ThreadLocal {
-	static ThreadLocal<Integer> x=new ThreadLocal<Integer>();
+	static ThreadLocal<Integer> localVar1=new ThreadLocal<Integer>();
 	static ThreadLocal<MyThreadScopeData> myThreadScopeData=new ThreadLocal<MyThreadScopeData>();
 	public static void main(String[] args) {
 		for(int i=0;i<10;i++){
@@ -13,7 +13,8 @@ public class T05ThreadLocal {
 				public void run() {
 					int data=new Random().nextInt();
 					System.out.println(Thread.currentThread().getName()+"放入:"+data);
-					x.set(data);//存,与当前线程相关
+					//1.存,与当前线程相关
+					localVar1.set(data);
 					/*MyThreadScopeData datas=new MyThreadScopeData();
 					datas.setName("name"+data);
 					datas.setAge(data);
@@ -29,7 +30,8 @@ public class T05ThreadLocal {
 	}
 	static class A{
 		public void get(){
-			int data=x.get();//取,与当前线程相关的共享数据
+		    //2.取,与当前线程相关的共享数据
+			int data=localVar1.get();
 			System.out.println("A从"+Thread.currentThread().getName()+"取出"+data);
 			
 			/*MyThreadScopeData datas=myThreadScopeData.get();
@@ -43,7 +45,7 @@ public class T05ThreadLocal {
 	
 	static class B{
 		public void get(){
-			int data=x.get();//取,与当前线程相关的共享数据
+			int data=localVar1.get();//取,与当前线程相关的共享数据
 			System.out.println("B从"+Thread.currentThread().getName()+"取出"+data);
 		}
 	}

@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
-
+//多线程并发下map获取数据出问题
 public class T05ThreadScopeShareData {
 	private static int data=0;
 	public static Map<Thread,Integer> threadData=new HashMap<Thread,Integer>();
