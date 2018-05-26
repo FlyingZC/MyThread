@@ -1,5 +1,5 @@
 package com.zc.z01demo;
-//模拟售票窗口.100张票.3个窗口卖.有线程安全问题
+//模拟售票窗口.共100张票.3个窗口卖.有线程安全问题.可能会出现几个窗口卖出同一张票
 public class T03Window {
 	public static void main(String[] args){
 		Window window1=new Window();
@@ -16,6 +16,7 @@ public class T03Window {
 }
 
 class Window extends Thread{
+    // 共享变量.票数
 	static int ticket=100;
 	public void run(){
 		while(true){

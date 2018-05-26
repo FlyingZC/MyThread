@@ -1,19 +1,19 @@
 package com.zc.z01demo;
 
-public class Test20Customer {
+public class T20Customer {
 	static Good good=new Good();
 	public static void main(String[] args) {
 		Thread pro=new Thread(new Runnable(){
 			@Override
 			public void run() {
-				synchronized(Test20Customer.class){
+				synchronized(T20Customer.class){
 						try {
 							if(good.getCount()>=30){
-								Test20Customer.class.wait();
+								T20Customer.class.wait();
 							}else{
 								good.setCount(good.getCount()+1);
 								System.out.println("生产者生产了第"+good.getCount()+"个商品");
-								Test20Customer.class.notify();
+								T20Customer.class.notify();
 							}
 						} catch (InterruptedException e) {
 							e.printStackTrace();
@@ -25,15 +25,15 @@ public class Test20Customer {
 		Thread cust = new Thread(new Runnable() {
 			@Override
 			public void run() {
-				synchronized (Test20Customer.class) {
+				synchronized (T20Customer.class) {
 					try {
 						if (good.getCount() <= 0) {
-							Test20Customer.class.wait();
+							T20Customer.class.wait();
 						} else {
 							good.setCount(good.getCount() - 1);
 							System.out.println("消费者消费了第" + good.getCount()
 									+ "个商品");
-							Test20Customer.class.notify();
+							T20Customer.class.notify();
 						}
 					} catch (InterruptedException e) {
 						e.printStackTrace();

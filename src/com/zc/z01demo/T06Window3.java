@@ -24,7 +24,7 @@ class Window3 implements Runnable{
 	public synchronized void show(){
 		if(ticket>0){
 			try {
-				Thread.sleep(1000);
+				Thread.sleep(100);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

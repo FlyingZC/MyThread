@@ -12,6 +12,7 @@ import java.util.concurrent.Executors;
  */
 public class T02CyclicBarrier {  
     public static void main(String[] args) {  
+        // ExecutorService:具有服务生命周期的Executor(例如关闭),它知道如何构建恰当的上下文来执行Runnable对象
         ExecutorService exec = Executors.newCachedThreadPool();       
         final Random random=new Random();  
         final CyclicBarrier barrier=new CyclicBarrier(4,new Runnable(){  

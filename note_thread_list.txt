@@ -1,4 +1,4 @@
-com.zc下
+com.zc.z01demo下
 T01Join:join,sleep,yield
 
 T01TenThreads:生成1-1000的二维数组,启动十个线程,分别得到每一行的最大值,join
