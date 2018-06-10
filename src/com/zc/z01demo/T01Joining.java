@@ -31,7 +31,7 @@ class Sleeper extends Thread
         try
         {
             // sleep()可能在指定时间期满时返回,也可能被中断.
-            sleep(duration);
+            Thread.sleep(duration);
         }
         catch (InterruptedException e)
         {
@@ -88,12 +88,7 @@ public class T01Joining
     {
         Sleeper sleeper1 = new Sleeper("Sleeper1", 1500), sleeper2 = new Sleeper("Sleeper2", 1500);
         Joiner joiner1 = new Joiner("Joiner1", sleeper1), joiner2 = new Joiner("Joiner2", sleeper2);
-        // sleeper2.join(),sleeper2中断自己,则joiner2继续执行
+        // main线程中断sleeper2线程,由于sleeper2.join(),则joiner2在sleeper2线程被中断后(即执行完毕)继续执行
         sleeper2.interrupt();
     }
-} /* Output:
-  Grumpy was interrupted. isInterrupted(): false
-  Doc join completed
-  Sleepy has awakened
-  Dopey join completed
-  *///:~
+} 

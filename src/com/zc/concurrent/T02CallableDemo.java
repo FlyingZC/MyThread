@@ -13,7 +13,7 @@ public class T02CallableDemo
     public static void main(String[] args)
     {
         ExecutorService exec = Executors.newCachedThreadPool();
-        // Future保存返回的结果,参数类型为String
+        // Future保存 线程池执行Callable返回的结果,泛型参数类型为String. 将所有Future对象放入results中
         ArrayList<Future<String>> results = new ArrayList<Future<String>>();
         for (int i = 0; i < 10; i++)
         {
@@ -41,12 +41,13 @@ public class T02CallableDemo
             }
             finally
             {
+                // 获取所有执行结果后,结束线程池
                 exec.shutdown();
             }
     }
 }
 
-//实现Callable接口,此时泛型为String,则返回结果Future的泛型参数也是String类型
+// 实现Callable接口,此时泛型为String,则返回结果Future的泛型参数也是String类型
 class TaskWithResult implements Callable<String>
 {
     private int id;

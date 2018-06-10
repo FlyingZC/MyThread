@@ -1,4 +1,4 @@
-package com.zc.think;
+package com.zc.z01demo;
 
 import java.util.ArrayList;
 import java.util.concurrent.Callable;
@@ -7,24 +7,26 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-//21.2.4 从人物中产生返回值
-public class CallableDemo
+// 实现Callback创建线程,并通过Future接收执行结果
+public class T02CreateThreadCallable
 {
     public static void main(String[] args)
     {
-        ExecutorService exec = Executors.newCachedThreadPool();
+        // 线程池
+        ExecutorService pool = Executors.newCachedThreadPool();
+        // 保存 线程执行结果
         ArrayList<Future<String>> results = new ArrayList<Future<String>>();
         for (int i = 0; i < 10; i++)
         {
-            //调用Callable,返回Future对象
-            results.add(exec.submit(new TaskWithResult(i)));
+            // 提交任务,并保存返回结果
+            results.add(pool.submit(new MyCallable(i)));
         }
-        for (Future<String> fs : results)
+        for (Future<String> future : results)
         {
             try
             {
-                //get()方法获取Future中的结果
-                System.out.println(fs.get());
+                // 阻塞返回线程执行结果
+                System.out.println(future.get());
             }
             catch (InterruptedException e)
             {
@@ -36,18 +38,17 @@ public class CallableDemo
             }
             finally
             {
-                exec.shutdown();
+                pool.shutdown();
             }
         }
     }
 }
 
-//Callable<String>中泛型参数表示从方法call()中返回的值.必须使用ExecutorService.submit()方法调用
-class TaskWithResult implements Callable<String>
+class MyCallable implements Callable<String>
 {
     private int id;
 
-    public TaskWithResult(int id)
+    public MyCallable(int id)
     {
         this.id = id;
     }
@@ -55,8 +56,7 @@ class TaskWithResult implements Callable<String>
     @Override
     public String call() throws Exception
     {
-
-        return "result of TaskWithResult" + id;
+        return "" + id;
     }
 
 }

@@ -48,9 +48,12 @@ T16Synchronized5:一个类中使用类名,对象名,静态方法,普通方法,�
 ??
 T17Wait:wait与notify执行流程
 
-??
+***
+中断
 T18Interrupt:interrupt执行流程
+T18Interrupt2
 
+***
 T21ThreadLocal:线程范围内共享变量,ThreadLocal
 
 ***********************

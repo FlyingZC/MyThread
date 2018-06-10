@@ -4,67 +4,95 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-//子线程循环10次,主线程循环100次,重复五十次.使用condition		await()和signal()
-public class T09Condition {
-	public static void main(String[] args) {
-		final CountBusiness business=new CountBusiness();
-		new Thread(new Runnable(){
-			@Override
-			public void run() {
-				for(int i=1;i<=50;i++){
-					business.sub(i);
-				}
-			}
-		}).start();
-		
-		for(int i=1;i<=50;i++){
-			business.main(i);
-		}
-		
-	}
+// 子线程循环10次,主线程循环100次,重复五十次.使用condition		await()和signal()
+public class T09Condition
+{
+    public static void main(String[] args)
+    {
+        final CountBusiness business = new CountBusiness();
+        new Thread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                for (int i = 1; i <= 50; i++)
+                {
+                    business.sub(i);
+                }
+            }
+        }).start();
+
+        for (int i = 1; i <= 50; i++)
+        {
+            business.main(i);
+        }
+
+    }
 }
 
-class CountBusiness{
-	Lock lock=new ReentrantLock();
-	
-	Condition condition=lock.newCondition();
-	private boolean bShouldSub=true;
-	public void sub(int count){
-		lock.lock();
-		try{
-			if(!bShouldSub){
-				try {
-					condition.await();//await();等!!!
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-			}
-			for(int i=1;i<=10;i++){
-				System.out.println(Thread.currentThread().getName()+"第"+count+"次,i="+i);
-			}
-			bShouldSub=false;
-			condition.signal();//相当于notify()
-		}finally{
-			lock.unlock();
-		}
-	}
-	public void main(int count){
-		lock.lock();
-		try{
-			if(bShouldSub){
-				try {
-					condition.await();
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-			}
-			for(int i=1;i<=100;i++){
-				System.out.println(Thread.currentThread().getName()+"第"+count+"次,i="+i);
-			}
-			bShouldSub=true;
-			condition.signal();
-		}finally{
-			lock.unlock();
-		}
-	}
+class CountBusiness
+{
+    Lock lock = new ReentrantLock();
+
+    Condition condition = lock.newCondition();
+
+    private boolean bShouldSub = true;
+
+    public void sub(int count)
+    {
+        lock.lock();
+        try
+        {
+            if (!bShouldSub)
+            {
+                try
+                {
+                    condition.await();//await();等!!!
+                }
+                catch (InterruptedException e)
+                {
+                    e.printStackTrace();
+                }
+            }
+            for (int i = 1; i <= 10; i++)
+            {
+                System.out.println(Thread.currentThread().getName() + "第" + count + "次,i=" + i);
+            }
+            bShouldSub = false;
+            condition.signal();//相当于notify()
+        }
+        finally
+        {
+            lock.unlock();
+        }
+    }
+
+    public void main(int count)
+    {
+        lock.lock();
+        try
+        {
+            if (bShouldSub)
+            {
+                try
+                {
+                    condition.await();
+                }
+                catch (InterruptedException e)
+                {
+                    e.printStackTrace();
+                }
+            }
+            for (int i = 1; i <= 100; i++)
+            {
+                System.out.println(Thread.currentThread().getName() + "第" + count + "次,i=" + i);
+            }
+            bShouldSub = true;
+            condition.signal();
+        }
+        finally
+        {
+            lock.unlock();
+        }
+    }
 }

@@ -21,22 +21,22 @@ public class LimitLatch
         public Sync()
         {
         }
-
+        // 共享式 获取同步状态.返回大于等于0的值表示成功. 否则表示获取失败
         @Override
         protected int tryAcquireShared(int ignored)
         {
             long newCount = count.incrementAndGet();// 增加并 获取
             if (newCount > limit)// 连接数 > limit
-            {
+            {// 当计数大于limit时,减小计数,返回-1代表获取失败.当前线程会挂起,直到其他线程操作计数又小于limit
                 count.decrementAndGet();// 减小 并 获取
-                return -1;// 大于limit返回-1
+                return -1;// 大于limit返回-1.会在这一行阻塞住
             }
             else
             {
                 return 1;
             }
         }
-
+        // 共享式 释放同步状态
         @Override
         protected boolean tryReleaseShared(int arg)
         {
@@ -70,7 +70,7 @@ public class LimitLatch
      */
     public void countUpOrAwait() throws InterruptedException
     {
-        sync.acquireSharedInterruptibly(1);
+        sync.acquireSharedInterruptibly(1);// 最终会调用sync.tryAcquireShared增加计数
     }
 
     /**
