@@ -1,12 +1,11 @@
-package com.zc.zx;
+package com.zc.concurrent;
 
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-//子线程循环10次,主线程循环100次,重复五十次.
-//使用condition		await()和signal()实现
-public class T14Condition
+// 子线程循环10次,主线程循环100次,重复五十次.使用condition		await()和signal()
+public class T04Condition
 {
     public static void main(String[] args)
     {
@@ -36,7 +35,7 @@ class CountBusiness
     Lock lock = new ReentrantLock();
 
     Condition condition = lock.newCondition();
-
+    // 最多同时只有一个线程操作该变量
     private boolean bShouldSub = true;
 
     public void sub(int count)
@@ -44,13 +43,11 @@ class CountBusiness
         lock.lock();
         try
         {
-            //推荐使用while,而不是if.因为在等待Condition时,允许发生虚假唤醒.
-            //所以建议Condition在蓄暖中等待,当bShouldSub满足条件时,照样执行while外的代码,不会死循环
             while (!bShouldSub)
             {
                 try
                 {
-                    condition.await();//await();等!!!
+                    condition.await();// await();等!!!
                 }
                 catch (InterruptedException e)
                 {
@@ -62,11 +59,11 @@ class CountBusiness
                 System.out.println(Thread.currentThread().getName() + "第" + count + "次,i=" + i);
             }
             bShouldSub = false;
-            condition.signal();//相当于notify()
+            condition.signal();// 相当于notify()
         }
         finally
         {
-            lock.unlock();
+            lock.unlock();// 解锁
         }
     }
 

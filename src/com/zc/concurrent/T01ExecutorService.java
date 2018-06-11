@@ -4,11 +4,11 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import org.junit.Test;
-
+// 线程池
 public class T01ExecutorService
 {
     @Test
-    public void testCachedThreadPool(String[] args)
+    public void testCachedThreadPool()
     {
         // CachedThreadPool在程序执行过程中通常会创建 与 所需数量相同的线程.
         // 然后在 它回收旧线程时 停止创建新线程.因此它是合理的Executor的首选,
@@ -18,7 +18,7 @@ public class T01ExecutorService
         {// 会起五个线程
             exec.execute(new SubRunnable());
         }
-        // 对shoutdown()的调用可防止新任务被提交给这个Executor.
+        // 对shoutdown()的调用 可防止新任务 被提交给这个Executor.
         // 当前线程(此处为main线程)将继续运行在shutdown()被调用前提交的所有任务.
         // 这个程序将在Executor中的所有任务完成后尽快退出.
         exec.shutdown();
@@ -30,7 +30,9 @@ public class T01ExecutorService
         // FixedThreadPool使用 有限的线程集 来执行所提交的任务
         ExecutorService exec = Executors.newFixedThreadPool(5);
         for (int i = 0; i < 5; i++)
+        {
             exec.execute(new SubRunnable());
+        }
         exec.shutdown();
     }
     
