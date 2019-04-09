@@ -2,22 +2,28 @@ package com.zc.z01demo;
 
 public class T22Volatile
 {
-    private volatile Integer volatileNum;
+    private static volatile Integer volatileNum = 0;
 
-    private Integer commonNum;
+    private static Integer commonNum = 0;
 
-    public static void main(String[] args)
-    {
-        for (int i = 0; i < 10; i++)
+    public static void main(String[] args) throws InterruptedException {
+        for (int i = 0; i < 10000; i++)
         {
-            new Thread(new Runnable()
-            {
+            Thread thread = new Thread(new Runnable() {
                 @Override
-                public void run()
-                {
-
+                public void run() {
+                    volatileNum++;
+                    commonNum++;
+                    try {
+                        Thread.sleep((long) Math.random());
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
-            }).start();
+            });
+            thread.start();
+            thread.join();
         }
+        System.out.println(volatileNum + ", " + commonNum);// 100000, 100000 有啥区别
     }
 }
