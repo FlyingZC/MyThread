@@ -1,14 +1,22 @@
 package com.zc.concurrent;
 
 import java.util.concurrent.locks.ReentrantLock;
-// 该类用于debug查看AQS若获取不到独占锁 进入到同步队列中的情况
+
+/**
+ * 该类用于debug查看AQS若获取不到独占锁 进入到同步队列中的情况
+ * case1 : 起两个线程,采用公平锁.调试 独占锁的获取与释放
+ * case1 : 起两个线程,采用非公平锁.调试 独占锁的获取与释放
+ */
 public class T01ReentrantLockDemo
 {
-    private static ReentrantLock lock = new ReentrantLock();
+    // 公平
+    private static ReentrantLock lock = new ReentrantLock(true);
+    // 默认非公平
+    // private static ReentrantLock lock = new ReentrantLock();
 
     public static void main(String[] args)
     {
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 2; i++)
         {
             Thread thread = new Thread(new Runnable()
             {
@@ -19,7 +27,8 @@ public class T01ReentrantLockDemo
                     lock.lock();
                     try
                     {
-                        Thread.sleep(10000);
+                        // Thread.sleep(10000);
+                        Thread.sleep(1000);
                     }
                     catch (InterruptedException e)
                     {

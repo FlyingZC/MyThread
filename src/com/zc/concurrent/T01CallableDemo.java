@@ -18,9 +18,9 @@ public class T01CallableDemo
         for (int i = 0; i < 10; i++)
         {
             // submit()方法会产生Future对象.它用Callable返回结果的特定类型进行了参数化.
-            // 可以使用isDone()来查询Future是否已经完成.
-            // 当任务完成时,它具有一个结果,可调用get()来获取该结果.
-            // 也可以不用isDone()来检查就直接调用get().这种情况下get()将阻塞,直到结果准备就绪
+            // 可以使用 isDone()来查询 Future是否已经完成.
+            // 当任务完成时,它具有一个结果,可调用 get()来获取该结果.
+            // 也可以不用 isDone()来检查就直接调用 get().这种情况下get()将阻塞,直到结果准备就绪
             // 使用ArrayList<Future<String>>来保存每个callable执行方法call中返回的结果
             results.add(exec.submit(new TaskWithResult(i)));// 提交任务
         }

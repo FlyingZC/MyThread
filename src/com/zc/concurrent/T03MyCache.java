@@ -5,18 +5,25 @@ import java.util.Map;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-//缓存系统
+// ReentrantReadWriteLock实现的缓存
 public class T03MyCache
 {
+    // 非线程安全.通过 ReentrantReadWriteLock操作保证读写的线程安全
     private Map<String, Object> cache = new HashMap<String, Object>();
 
     public static void main(String[] args)
     {
-
+        T03MyCache cacher = new T03MyCache();
+        System.out.println(cacher.getData("key1"));
     }
 
     private ReadWriteLock rwl = new ReentrantReadWriteLock();
 
+    /**
+     * 有则返回,无则缓存后返回
+     * @param key
+     * @return
+     */
     public Object getData(String key)
     {
         // 检查是否有缓存,有直接给.无则查询
