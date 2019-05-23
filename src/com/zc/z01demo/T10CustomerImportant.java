@@ -65,7 +65,7 @@ class MProduct
     public synchronized void product()
     {
         if (count >= 20)
-        {
+        {// 生产数量>=20就放弃生产,让消费者消费
             try
             {
                 notify();//只要wait()就记得notify();成对出现
@@ -77,7 +77,7 @@ class MProduct
             }
         }
         else
-        {
+        {// 产品数量<20,随机生产一定数量产品,再放弃生产,让消费者消费
             int ci = 20 - count + 1;//用来产生随机数的上限
             int r = rand.nextInt(ci);//实际产生随机数的范围为[0,20-count],表示最多还能生产多少个
             //System.out.println("生产者随机数上限:"+ci+",产生的随机数:"+r);

@@ -19,7 +19,6 @@ public class T02CreateThreadDemo
             public void run()
             {
                 System.out.println("继承Thread");
-                super.run();
             }
         };
         thread.start();

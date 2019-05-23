@@ -124,13 +124,9 @@ public class T12SynchronizedMonitor {
 				a.syncStatA();
 			}
 		});
-		
-		
+
 	}
-	
 }
-
-
 
 class SyncClass{
 	//同步方法A

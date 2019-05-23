@@ -50,7 +50,7 @@ class Window2 implements Runnable
                 {
                     try
                     {
-                        Thread.sleep(1000);
+                        Thread.sleep(50);
                     }
                     catch (InterruptedException e)
                     {
