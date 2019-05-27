@@ -6,11 +6,18 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 public class T03RWLockCachedData {
 
     public static void main(String[] args) {
-        T03RWLockCachedData cacher = new T03RWLockCachedData();
-        cacher.processCachedData();
+        T03RWLockCachedData cache = new T03RWLockCachedData();
+        for (int i = 0; i < 10; i++) {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    cache.processCachedData("za");
+                }
+            }).start();
+        }
     }
 
-    Object data;
+    String data;
 
     volatile boolean cacheValid;
     // 读写锁实例
@@ -19,7 +26,7 @@ public class T03RWLockCachedData {
     /**
      * 先读缓存,或没有则写缓存后再读
      */
-    void processCachedData() {
+    void processCachedData(String str) {
         rwl.readLock().lock();// 获取读锁
         if (!cacheValid) // 如果缓存过期了，或者为 null
         {
@@ -30,12 +37,13 @@ public class T03RWLockCachedData {
             // Recheck state because another thread might have acquired
             //   write lock and changed state before we did.
             try {
-                if (!cacheValid) // 重新判断，因为在等待写锁的过程中，可能前面有其他写线程执行过了
+                if (!cacheValid) // 重新判断，因为在等待写锁的过程中，可能前面有其他写线程修改了该值
                 {
-                    // data = ...
+                    data = str;
                     cacheValid = true;//查到数据保存缓存,置true
                 }
                 // Downgrade by acquiring read lock before releasing write lock
+                // 在持有 写锁 的情况下 获取 写锁. 锁降级
                 rwl.readLock().lock();// 获取读锁 (持有写锁的情况下，是允许获取读锁的，称为 “锁降级”，反之不行。) (自己可以同时挂写锁和读锁)锁对自己线程无效.此时写锁未是否,又挂读锁,成为更新锁
             } finally {
                 // 释放写锁，此时还剩一个读锁
@@ -45,6 +53,7 @@ public class T03RWLockCachedData {
         try {
             // 使用数据
             // use(data);
+            System.out.println(data);
         } finally {
             // 释放读锁
             rwl.readLock().unlock();

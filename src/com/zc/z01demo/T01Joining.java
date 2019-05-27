@@ -42,6 +42,7 @@ class Sleeper extends Thread
             return;
         }
         System.out.println(getName() + " has awakened");
+        System.out.println(getName() + "执行完毕");
     }
 }
 
@@ -79,6 +80,7 @@ class Joiner extends Thread
             System.out.println("Interrupted");
         }
         System.out.println(getName() + " join completed");
+        System.out.println(getName() + "执行完毕");
     }
 }
 
@@ -86,9 +88,14 @@ public class T01Joining
 {
     public static void main(String[] args)
     {
-        Sleeper sleeper1 = new Sleeper("Sleeper1", 1500), sleeper2 = new Sleeper("Sleeper2", 1500);
-        Joiner joiner1 = new Joiner("Joiner1", sleeper1), joiner2 = new Joiner("Joiner2", sleeper2);
-        // main线程中断sleeper2线程,由于sleeper2.join(),则joiner2在sleeper2线程被中断后(即执行完毕)继续执行
+        // joiner等待 sleeper线程执行完毕后继续执行
+        Sleeper sleeper1 = new Sleeper("Sleeper1", 1500),
+                sleeper2 = new Sleeper("Sleeper2", 1500);
+
+        Joiner joiner1 = new Joiner("Joiner1", sleeper1),
+                joiner2 = new Joiner("Joiner2", sleeper2);
+
+        // main线程中断 sleeper2线程,由于 sleeper2.join(),则 joiner2在 sleeper2线程被中断后(即执行完毕)继续执行
         sleeper2.interrupt();
     }
 } 

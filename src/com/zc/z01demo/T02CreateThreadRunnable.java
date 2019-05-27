@@ -6,7 +6,7 @@ public class T02CreateThreadRunnable
     public static void main(String[] args)
     {
         MyRunnable myRunnable = new MyRunnable();
-        // 要想启动一个多线程.必须调用start()方法
+        // 要想启动一个线程.必须调用 start()方法
         // Thread类的构造方法中.有一个Thread(Runnable target)
         // new Thread(..)对象的start()方法启动的是myRunnable对象的run()方法.底层源码.Runnable()接口只有run()方法
         // Thread类implements Runnable

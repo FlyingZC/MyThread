@@ -37,7 +37,7 @@ public class T01PossibleReordering
             other.join();
             System.out.println("第" + i++ + "次,(" + x + "," + y + ")");
             if (x == 0 && y == 0) {
-                throw new RuntimeException();
+                throw new RuntimeException("发生指令冲排序的情况!");
             }
         }
     }

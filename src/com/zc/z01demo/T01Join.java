@@ -84,5 +84,6 @@ class MyThread extends Thread
             System.out.println(
                     Thread.currentThread().getName() + ", 优先级" + Thread.currentThread().getPriority() + ", i = " + i);
         }
+        System.out.println(Thread.currentThread().getName() + "执行完毕");
     }
 }

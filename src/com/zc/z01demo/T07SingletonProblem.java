@@ -5,7 +5,7 @@ public class T07SingletonProblem
 {
     public static void main(String[] args)
     {
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 100; i++)
         {
             new Thread(new Runnable()
             {
@@ -16,7 +16,7 @@ public class T07SingletonProblem
                     {
                         try
                         {
-                            Thread.sleep(1000);
+                            Thread.sleep(1);
                         }
                         catch (InterruptedException e)
                         {

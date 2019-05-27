@@ -3,9 +3,9 @@ package com.zc.z01demo;
 // 死锁
 public class T08DeadLock
 {
-    static StringBuffer stringBuffer1 = new StringBuffer();
+    private static StringBuffer stringBuffer1 = new StringBuffer();
 
-    static StringBuffer stringBuffer2 = new StringBuffer();
+    private static StringBuffer stringBuffer2 = new StringBuffer();
 
     public static void main(String[] args)
     {
@@ -16,6 +16,7 @@ public class T08DeadLock
             {
                 synchronized (stringBuffer1)
                 {
+                    System.out.println("线程1获取锁sb1");
                     try
                     {
                         // sleep时cpu会被其他线程抢占.但是当前线程占有的同步资源不会释放.
@@ -30,6 +31,7 @@ public class T08DeadLock
                     stringBuffer1.append("A");
                     synchronized (stringBuffer2)
                     {
+                        System.out.println("线程1获取锁sb2");
                         stringBuffer2.append("B");
                         System.out.println(stringBuffer1);
                         System.out.println(stringBuffer2);
@@ -45,6 +47,7 @@ public class T08DeadLock
             {
                 synchronized (stringBuffer2)
                 {
+                    System.out.println("线程2获取锁sb2");
                     try
                     {
                         Thread.sleep(100);
@@ -56,6 +59,7 @@ public class T08DeadLock
                     stringBuffer1.append("C");
                     synchronized (stringBuffer1)
                     {
+                        System.out.println("线程2获取锁sb2");
                         stringBuffer2.append("D");
                         System.out.println(stringBuffer1);
                         System.out.println(stringBuffer2);

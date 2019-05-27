@@ -31,7 +31,7 @@ public class T03ReadWriteLock
                 {
                     while (true)
                     {
-                        data.put();
+                        // data.put();
                     }
                 }
             }).start();

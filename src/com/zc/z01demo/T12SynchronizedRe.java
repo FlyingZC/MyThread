@@ -4,27 +4,32 @@ public class T12SynchronizedRe
 {
     public static void main(String[] args)
     {
+        SubLock subLock = new SubLock();
         // main线程执行
-        new SubLock().doSomething();
+        subLock.doSomething();
         // 子线程执行
         new Thread(new Runnable()
         {
-
             @Override
             public void run()
             {
-                new SubLock().doSomething();
+                subLock.doSomething();
             }
-
         }).start();
     }
 }
 
 class SuperLock
 {
-    public synchronized void doSomething()
+    // 加不加 synchronized均可
+    public void doSomething()
     {
-        System.out.println(Thread.currentThread().getName() + ":调用 父类中 的doSomething方法");
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println(Thread.currentThread().getName() + ":调用 父类中 的doSomething()方法");
     }
 }
 
@@ -33,7 +38,7 @@ class SubLock extends SuperLock
     @Override
     public synchronized void doSomething()
     {
-        System.out.println(Thread.currentThread().getName() + ":调用 子类中 的doSomething方法");
+        System.out.println(Thread.currentThread().getName() + ":调用 子类中 的doSomething()方法");
         super.doSomething();
     }
 }

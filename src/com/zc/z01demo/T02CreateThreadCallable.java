@@ -41,6 +41,7 @@ public class T02CreateThreadCallable
                 pool.shutdown();
             }
         }
+        System.out.println("main over.");
     }
 }
 

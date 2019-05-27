@@ -12,14 +12,14 @@ public class T00ThreadPoolExecutor {
     protected static String name = "zc-";
 
     // 队列数, null代表无界
-    private static final Integer QUQUE_SIZE = null;
+    private static final Integer QUEUE_SIZE = 5;
 
     // 任务数
     private static final int TASK_SIZE = 10;
 
     public static void main(String[] args) {
 
-        initThreadPoolExecutor(QUQUE_SIZE);
+        initThreadPoolExecutor(QUEUE_SIZE);
 
         List<Future<Void>> results = new ArrayList<Future<Void>>();
 
@@ -64,10 +64,15 @@ public class T00ThreadPoolExecutor {
 
         @Override
         public Void call() throws Exception {
-            System.out.println("-- hello before callable --");
-            business = null;// TODO 空指针异常被线程池吃掉了
-            business.method1();// 擦! 线程池会把异常吃掉.此处看看 business空指针
-            System.out.println("-- hello callable --");
+            // 如果某个任务执行出现异常，那么执行任务的线程会被关闭，而不是继续接收其他任务。然后会启动一个新的线程来代替它
+//            try {
+                System.out.println("-- hello before callable --");
+                business = null;// TODO 空指针异常被线程池吃掉了
+                business.method1();// 擦! 线程池会把异常吃掉.此处看看 business空指针
+                System.out.println("-- hello callable --");
+//            } catch (Exception e) {
+//                System.out.println(Thread.currentThread().getName() + "执行出错");
+//            }
             return null;
         }
 

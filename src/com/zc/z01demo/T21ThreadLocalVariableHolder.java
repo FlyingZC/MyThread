@@ -20,8 +20,9 @@ public class T21ThreadLocalVariableHolder
 
     // 所以get,set都不需要加锁
     public static void increment()
-    {// 加1
+    {// 加 1
         localValue.set(localValue.get() + 1);
+        System.out.println(Thread.currentThread().getName() + ", getLocalValue: " + localValue.get());
     }
 
     public static int get()

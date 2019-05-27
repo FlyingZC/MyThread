@@ -3,6 +3,7 @@ package com.zc.z01demo;
 import java.util.concurrent.*;
 // wait(),notify()
 // 生产者消费者餐厅
+// TODO 这个demo有点问题
 public class T10CustomerRestaurant
 {
     Meal meal;
@@ -60,13 +61,13 @@ class WaitPerson implements Runnable
             {
                 synchronized (this)
                 {
-                    while (restaurant.meal == null) // 若没有事物,则等待
+                    while (restaurant.meal == null) // 若没有食物,则等待
                         wait(); // ... for the chef to produce a meal
                 }
-                System.out.println("Waitperson got " + restaurant.meal);// 取走事物
-                synchronized (restaurant.chef)
+                System.out.println("Waitperson got " + restaurant.meal);// 取走食物
+                synchronized (restaurant.chef) // 生产者锁
                 {
-                    restaurant.meal = null;// 取走事物后,将mean置为null
+                    restaurant.meal = null;// 取走食物后,将meal置为null
                     restaurant.chef.notifyAll(); // Ready for another 通知 厨师 生产另一份食物
                 }
             }
@@ -95,9 +96,9 @@ class Chef implements Runnable
         {
             while (!Thread.interrupted())
             {
-                synchronized (this)
+                synchronized (this) // 生产者锁
                 {
-                    while (restaurant.meal != null)// 若已经 生产了事务,等待事务被取走
+                    while (restaurant.meal != null)// 若已经 生产了食物,等待食物被取走
                         wait(); // ... for the meal to be taken
                 }
                 if (++count == 10)// 食物卖完
@@ -106,7 +107,7 @@ class Chef implements Runnable
                     restaurant.exec.shutdownNow();
                 }
                 System.out.println("Order up! ");
-                synchronized (restaurant.waitPerson)
+                synchronized (restaurant.waitPerson) // 消费者锁
                 {
                     restaurant.meal = new Meal(count);
                     restaurant.waitPerson.notifyAll();

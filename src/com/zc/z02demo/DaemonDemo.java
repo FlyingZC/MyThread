@@ -9,7 +9,7 @@ public class DaemonDemo
             @Override
             public void run()
             {
-                // daemodThread run方法中是一个while死循环，会一直打印,但是当main线程结束后daemonThread就会退出所以不会出现死循环的情况。
+                // daemonThread run方法中是一个while死循环，会一直打印,但是当main线程结束后daemonThread就会退出所以不会出现死循环的情况。
                 while (true)
                 {
                     try
@@ -41,5 +41,6 @@ public class DaemonDemo
         {
             e.printStackTrace();
         }
+        System.out.println("main over.");
     }
 }

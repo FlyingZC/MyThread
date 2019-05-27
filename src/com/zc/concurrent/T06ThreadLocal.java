@@ -29,7 +29,6 @@ public class T06ThreadLocal
         }
     }
 
-    //内部类可用static修饰
     static class A
     {
         public void get()

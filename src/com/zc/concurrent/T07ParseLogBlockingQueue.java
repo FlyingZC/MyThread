@@ -10,6 +10,7 @@ public class T07ParseLogBlockingQueue
     public static void main(String[] args)
     {
         final BlockingQueue<String> queue = new ArrayBlockingQueue<String>(16);// 一个也可以
+        // 消费者线程
         for (int i = 0; i < 4; i++)
         {
             new Thread()
@@ -31,6 +32,8 @@ public class T07ParseLogBlockingQueue
                 };
             }.start();
         }
+
+        // 生产者线程
         for (int i = 0; i < 16; i++)
         {
             String log = "日志" + i;

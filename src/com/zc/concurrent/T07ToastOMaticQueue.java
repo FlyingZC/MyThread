@@ -25,16 +25,16 @@ public class T07ToastOMaticQueue
     }
 }
 
-// 使用blockQueue模拟 吐司生产的每个过程,每个步骤 由一个线程去执行.比wait好用
+// 使用 blockingQueue模拟 吐司生产的每个过程,每个步骤 由一个线程去执行.比wait好用
 // 吐司
 class Toast
 { // 吐司状态
     public enum Status
     {// 制作完成,抹过黄油,在抹过黄油的吐司上涂果酱完毕
-        DRY, BUTTERED, JAMMED
+        FIRST, SECOND, THIRD
     }
 
-    private Status status = Status.DRY;
+    private Status status = Status.FIRST;
 
     private final int id;
 
@@ -45,12 +45,12 @@ class Toast
 
     public void butter()
     {
-        status = Status.BUTTERED;
+        status = Status.SECOND;
     }
 
     public void jam()
     {
-        status = Status.JAMMED;
+        status = Status.THIRD;
     }
 
     public Status getStatus()
@@ -195,7 +195,7 @@ class Eater implements Runnable
                 Toast t = finishedQueue.take();
                 // Verify that the toast is coming in order,
                 // and that all pieces are getting jammed:
-                if (t.getId() != counter++ || t.getStatus() != Toast.Status.JAMMED)
+                if (t.getId() != counter++ || t.getStatus() != Toast.Status.THIRD)
                 {
                     System.out.println(">>>> Error: " + t);
                     System.exit(1);

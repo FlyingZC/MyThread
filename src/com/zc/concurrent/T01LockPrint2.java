@@ -3,7 +3,7 @@ package com.zc.concurrent;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-// 两个线程 无规则获取锁并输出zccc或xddd.此时output为静态方法.Lock锁使用static修饰
+// 此时output为静态方法.Lock锁使用static修饰
 public class T01LockPrint2
 {
     public static void main(String[] args)
@@ -39,6 +39,7 @@ public class T01LockPrint2
         //创建锁对象	一个可重入的互斥锁 Lock
         static Lock lock = new ReentrantLock();
 
+        // 获取锁打印 name中的所有字符,然后释放锁
         public static void output(String name)
         {
             int len = name.length();
@@ -49,7 +50,7 @@ public class T01LockPrint2
                 for (int i = 0; i < len; i++)
                 {
                     //若此时抛异常,不会释放锁.所以建议在finally里unlock()
-                    System.out.print(name.charAt(i));
+                    System.out.print(name.charAt(i));// 逐个字符打印
                 }
                 System.out.println();
             }

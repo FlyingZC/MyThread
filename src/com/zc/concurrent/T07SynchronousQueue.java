@@ -13,6 +13,7 @@ import java.util.concurrent.SynchronousQueue;
 public class T07SynchronousQueue {
     private static final BlockingQueue<Integer> q = new SynchronousQueue<>();
     public static void main(String[] args) {
+        // 生产者线程
         new Thread() {
             public void run() {
                 for (int i = 0; i < 6; i++) {
@@ -27,6 +28,7 @@ public class T07SynchronousQueue {
             }
         }.start();
 
+        // 消费者线程
         new Thread() {
             public void run() {
                 for (int i = 0; i < 6; i++) {

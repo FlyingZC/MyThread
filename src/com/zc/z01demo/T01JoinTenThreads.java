@@ -13,9 +13,14 @@ public class T01JoinTenThreads
             everyThread[i] = new EveryThread(arr[i]);// 初始化每个线程
             everyThread[i].setName("线程" + i);
             everyThread[i].start();
+
+        }
+        for (int i = 0; i < 10; i++)
+        {
             try
             {
                 // 第一次for循环,i=0,主线程等待线程0执行完毕.然后进行第二次for循环,i=1,主线程等待线程1执行完毕.进行第三次for循环...
+                // a线程执行完了,再调 a.join()也没关系
                 everyThread[i].join();
             }
             catch (InterruptedException e)
@@ -23,7 +28,7 @@ public class T01JoinTenThreads
                 e.printStackTrace();
             }
         }
-
+        System.out.println("main over.");
     }
     /**
      * 生成10*100的二维数组
