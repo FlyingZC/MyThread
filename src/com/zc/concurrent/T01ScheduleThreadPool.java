@@ -1,6 +1,8 @@
 package com.zc.concurrent;
 
 import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 // ScheduledThreadPoolExecutor实现了ScheduledExecutorService接口，
 // 该接口定义了可延时执行异步任务和可周期执行异步任务的特有功能
@@ -22,5 +24,18 @@ public class T01ScheduleThreadPool {
 				System.out.println("bang");
 			}
 		}, 6, 2, TimeUnit.SECONDS);//6秒后开始执行Runnable,每隔两秒执行一次
+
+        ScheduledExecutorService retryExecutor = Executors.newScheduledThreadPool(1,
+                new NamedThreadFactory("RetryTimer", true));
+
+        ScheduledFuture<?> retryFuture = retryExecutor.scheduleWithFixedDelay(new Runnable() {
+            public void run() {
+                try {
+                    // retry();
+                } catch (Throwable t) { // Defensive fault tolerance
+                    // logger.error("Unexpected error occur at failed retry, cause: " + t.getMessage(), t);
+                }
+            }
+        }, 1, 1, TimeUnit.MILLISECONDS);
 	}
 }
